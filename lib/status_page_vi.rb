@@ -16,36 +16,49 @@ require 'open-uri'
 require 'pry'
 
 module StatusPageVi
-  RESOURCES = [ BitBucket, CloudFlareStatus, Github, RubyGems ].freeze
+  RESOURCES = {
+    'BitBucket' => BitBucket,
+    'CloudFlareStatus' => CloudFlareStatus,
+    'Github' => Github,
+    'RubyGems' => RubyGems
+  }.freeze
 
   class CLI < Thor
     desc "resources", "outputs avaliable resources with urls"
     def resources
-      RESOURCES.each do |resource_class|
-        puts "#{resource_class} : #{resource_class::URL}"
+      RESOURCES.each do |resource_name, resource_class|
+        puts "#{resource_name} : #{resource_class::URL}"
       end
     end
 
-    desc "pull", "make the application pull all the status page data from different providers and save into the data store"
-    def pull
-      StatusPageVi::PullService.call(:all)
+    desc "pull RESOURCE_NAME", "make the application pull data from RESOURCE and save into the data store, ALL by default"
+    method_option :value, :default => "some value"
+    def pull(resource = 'ALL')
+
+      StatusPageVi::PullService.call(
+        RESOURCES[resource] || 'ALL'
+      )
     end
 
-    desc "live", "constantly queries the URLs and outputs the status periodically on the console and save it to the data store"
-    def live
+    desc "live RESOURCE_NAME", "constantly queries URL and outputs the status periodically on the console and save it to the data store, ALL by default"
+    def live(resource = 'ALL')
       loop do
         begin
-          StatusPageVi::PullService.call(:all)
+          StatusPageVi::PullService.call(
+            RESOURCES[resource] || 'ALL'
+          )
         rescue Interrupt
-          RESOURCES.each(&:save)
+          RESOURCES.values.each(&:save)
           break
         end
       end
     end
 
-    desc "history", "make the application pull all the status page data from different providers and save into the data store"
-    def history
-      StatusPageVi::HistoryService.call(:all)
+    desc "history RESOURCE_NAME", "display all the data which was gathered by the tool, ALL by default"
+    def history(resource = 'ALL')
+      StatusPageVi::HistoryService.call(
+        RESOURCES[resource] || 'ALL'
+      )
     end
   end
 end

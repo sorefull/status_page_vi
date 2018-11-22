@@ -39,7 +39,7 @@ module StatusPageVi
       end
 
       def cache_file_path
-        "cache/#{self}.json"
+        "#{__dir__}/../../../cache/#{self}.json"
       end
     end
 

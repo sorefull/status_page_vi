@@ -35,7 +35,7 @@ module StatusPageVi
     end
 
     def to_s
-      "#{self.class}: #{self.timestamp} : #{self.options['status']}"
+      "#{self.class::URL}: #{self.timestamp} : #{self.options['status']}"
     end
   end
 end
