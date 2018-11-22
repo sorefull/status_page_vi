@@ -19,9 +19,21 @@ module StatusPageVi
 
   class CLI < Thor
 
-    desc "pull", "outputs the list of services and data about them"
+    desc "pull", "make the application pull all the status page data from different providers and save into the data store"
     def pull
       StatusPageVi::PullService.call(:all)
+    end
+
+    desc "live", "constantly queries the URLs and outputs the status periodically on the console and save it to the data store"
+    def live
+      loop do
+        begin
+          StatusPageVi::PullService.call(:all)
+        rescue Interrupt
+          RESOURCES.each(&:save)
+          break
+        end
+      end
     end
   end
 end

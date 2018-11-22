@@ -5,7 +5,7 @@ module StatusPageVi
     end
 
     module RecordableClassMethods
-      def save(service)
+      def save(service = collection)
         data = collection.merge(service)
         update_storrage(data)
 
