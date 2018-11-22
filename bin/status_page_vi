@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require 'status_page_vi'
+
+StatusPageVi::CLI.start(ARGV)
