@@ -12,6 +12,12 @@ module StatusPageVi
       puts resource
     end
 
+    def self.print_history
+      puts "-------#{self}-------"
+      self.list.each { |resource| puts resource }
+      puts
+    end
+
     attr_accessor :timestamp, :options, :scraper
 
     def call

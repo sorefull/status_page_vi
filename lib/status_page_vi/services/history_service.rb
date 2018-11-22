@@ -1,7 +1,7 @@
 module StatusPageVi
-  class HistoryService
-    def self.call(services)
-      binding.pry
+  class HistoryService < BaseService
+    def self.call(option = nil)
+      resources(option).each(&:print_history)
     end
   end
 end

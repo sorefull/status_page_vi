@@ -1,5 +1,5 @@
 module StatusPageVi
-  class BackupService
+  class BackupService < BaseService
     def self.backup(services)
       binding.pry
     end
