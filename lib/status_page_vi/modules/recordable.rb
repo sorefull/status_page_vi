@@ -18,12 +18,16 @@ module StatusPageVi
         end
       end
 
-      private
+      def cache_file_path
+        "#{__dir__}/../../../cache/#{self}.json"
+      end
 
       def update_storrage(data)
         File.delete(cache_file_path) if File.exists?(cache_file_path)
         write_to_service_file(data)
       end
+
+      private
 
       def collection
         @collection ||= begin
@@ -34,12 +38,8 @@ module StatusPageVi
       end
 
       def write_to_service_file(data)
-        Dir.mkdir('cache') unless Dir.exists?('cache')
-        File.open(cache_file_path, 'w') { |file| file.write(data.to_json) }
-      end
-
-      def cache_file_path
-        "#{__dir__}/../../../cache/#{self}.json"
+        Dir.mkdir("cache") unless Dir.exists?("cache")
+        File.open(cache_file_path, "w") { |file| file.write(data.to_json) }
       end
     end
 

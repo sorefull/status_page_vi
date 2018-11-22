@@ -9,11 +9,14 @@ require "status_page_vi/services/pull_service"
 require "status_page_vi/services/history_service"
 require "status_page_vi/services/backup_service"
 
+require "status_page_vi/validators/backup_file_validator"
+
+require "status_page_vi/errors"
+
 require "thor"
 require 'nokogiri'
 require 'open-uri'
-
-require 'pry'
+require 'json'
 
 module StatusPageVi
   RESOURCES = {
@@ -31,21 +34,23 @@ module StatusPageVi
       end
     end
 
-    desc "pull RESOURCE_NAME", "make the application pull data from RESOURCE and save into the data store, ALL by default"
-    method_option :value, :default => "some value"
+    desc "pull RESOURCE_NAME", "make the application pull data from RESOURCE and save into the data store, ALL resources by default"
     def pull(resource = 'ALL')
+      raise InvalidResource unless valid_resource?(resource)
 
       StatusPageVi::PullService.call(
-        RESOURCES[resource] || 'ALL'
+        RESOURCES[resource] || resource
       )
     end
 
-    desc "live RESOURCE_NAME", "constantly queries URL and outputs the status periodically on the console and save it to the data store, ALL by default"
+    desc "live RESOURCE_NAME", "constantly queries URL and outputs the status periodically on the console and save it to the data store, ALL resources by default"
     def live(resource = 'ALL')
+      raise InvalidResource unless valid_resource?(resource)
+
       loop do
         begin
           StatusPageVi::PullService.call(
-            RESOURCES[resource] || 'ALL'
+            RESOURCES[resource] || resource
           )
         rescue Interrupt
           RESOURCES.values.each(&:save)
@@ -54,11 +59,34 @@ module StatusPageVi
       end
     end
 
-    desc "history RESOURCE_NAME", "display all the data which was gathered by the tool, ALL by default"
+    desc "history RESOURCE_NAME", "display all the data which was gathered by the tool, ALL resources by default"
     def history(resource = 'ALL')
+      raise InvalidResource unless valid_resource?(resource)
+
       StatusPageVi::HistoryService.call(
-        RESOURCES[resource] || 'ALL'
+        RESOURCES[resource] || resource
       )
+    end
+
+    desc "backup PATH RESOURCE_NAME", "takes a path variable, and creates a backup of historic and currently saved data, ALL resources by default"
+    def backup(path, resource = 'ALL')
+      raise InvalidResource unless valid_resource?(resource)
+
+      StatusPageVi::BackupService.backup(
+        path,
+        RESOURCES[resource] || resource
+      )
+    end
+
+    desc "restore PATH_TO_BACKUP", "takes a path variable which is a backup created by the application and restores that data"
+    def restore(path_to_file)
+      StatusPageVi::BackupService.restore(path_to_file)
+    end
+
+    private
+
+    def valid_resource?(resource)
+      return true if RESOURCES[resource] || resource == 'ALL'
     end
   end
 end

@@ -27,15 +27,15 @@ module StatusPageVi
 
     def get_data
       self.timestamp = Time.now
-      self.options['status'] = stats_good? ? 'good' : 'bad'
+      self.options["status"] = stats_good? ? "good" : "bad"
     end
 
     def to_h
-      { self.timestamp => { 'status' => self.options['status'] } }
+      { self.timestamp => { "status" => self.options["status"] } }
     end
 
     def to_s
-      "#{self.class::URL}: #{self.timestamp} : #{self.options['status']}"
+      "#{self.class::URL}: #{self.timestamp} : #{self.options["status"]}"
     end
   end
 end
