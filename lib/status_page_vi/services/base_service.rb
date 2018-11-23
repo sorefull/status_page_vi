@@ -1,13 +1,8 @@
 module StatusPageVi
   class BaseService
-    def self.resources(option)
-      if option == "ALL"
-        StatusPageVi::RESOURCES.values
-      elsif StatusPageVi::RESOURCES.values.include?(option)
-        [ option ]
-      else
-        []
-      end
+    def self.resources(resource_name)
+      return StatusPageVi::RESOURCES.values if resource_name == "ALL"
+      [ resource_name ]
     end
   end
 end

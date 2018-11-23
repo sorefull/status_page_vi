@@ -53,7 +53,6 @@ module StatusPageVi
             RESOURCES[resource] || resource
           )
         rescue Interrupt
-          RESOURCES.values.each(&:save)
           break
         end
       end

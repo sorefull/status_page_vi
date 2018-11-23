@@ -14,7 +14,7 @@ module StatusPageVi
 
       raise InvalidBackup unless validator.valid_backup?
 
-      validator.resource.update_storrage(validator.json_data)
+      validator.resource.update_storage(validator.json_data)
     end
   end
 end

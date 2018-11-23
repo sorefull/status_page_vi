@@ -5,9 +5,9 @@ module StatusPageVi
     end
 
     module RecordableClassMethods
-      def save(service = collection)
+      def save(service)
         data = collection.merge(service)
-        update_storrage(data)
+        update_storage(data)
 
         @collection = nil
       end
@@ -22,7 +22,7 @@ module StatusPageVi
         "#{__dir__}/../../../cache/#{self}.json"
       end
 
-      def update_storrage(data)
+      def update_storage(data)
         File.delete(cache_file_path) if File.exists?(cache_file_path)
         write_to_service_file(data)
       end
