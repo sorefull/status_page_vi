@@ -1,10 +1,10 @@
 module StatusPageVi
   class BackupService < BaseService
     def self.backup(path, resource)
-      resources(resource).each do |resource|
+      resources(resource).each do |resource_class|
         FileUtils.cp(
-          resource.cache_file_path,
-          "#{path}/#{resource.name.split("::").last}.json"
+          resource_class.cache_file_path,
+          "#{path}/#{resource_class.name.split("::").last}.json"
         )
       end
     end

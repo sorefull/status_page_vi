@@ -23,7 +23,7 @@ module StatusPageVi
       end
 
       def update_storage(data)
-        File.delete(cache_file_path) if File.exists?(cache_file_path)
+        File.delete(cache_file_path) if File.exist?(cache_file_path)
         write_to_service_file(data)
       end
 
@@ -31,14 +31,14 @@ module StatusPageVi
 
       def collection
         @collection ||= begin
-          JSON.parse(File.read cache_file_path)
+          JSON.parse(File.read(cache_file_path))
         rescue Errno::ENOENT
           {}
         end
       end
 
       def write_to_service_file(data)
-        Dir.mkdir("cache") unless Dir.exists?("cache")
+        Dir.mkdir("#{__dir__}/../../../cache") unless Dir.exists?("#{__dir__}/../../../cache")
         File.open(cache_file_path, "w") { |file| file.write(data.to_json) }
       end
     end

@@ -15,9 +15,7 @@ RSpec.describe StatusPageVi::BackupFileValidator do
     context "when backup is valid" do
       let(:validator) { described_class.new(valid_backup_path) }
       let(:json_data) {
-        {
-          "2018-11-23 14:31:48 +0100" => { "status" => "good" }
-        }
+        { "2018-11-23 14:31:48 +0100" => { "status" => "good" } }
       }
 
       before do

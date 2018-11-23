@@ -11,7 +11,7 @@ RSpec.describe StatusPageVi::Github do
     it "requests data from resource and stores it in instance variables" do
       subject.call
       expect(subject.timestamp).to_not be(nil)
-      expect(subject.options).to eq({ "status"=>"good" })
+      expect(subject.options).to eq("status" => "good")
     end
   end
 
@@ -21,7 +21,7 @@ RSpec.describe StatusPageVi::Github do
     end
 
     let(:expected_data_to_be_stored) {
-      { "2018-11-23 19:24:38.465389000 +0100" => { "status"=>"good" } }
+      { "2018-11-23 19:24:38.465389000 +0100" => { "status" => "good" } }
     }
 
     it "saves new data to the service file" do

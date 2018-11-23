@@ -11,7 +11,7 @@ RSpec.describe StatusPageVi::CloudFlareStatus do
     it "requests data from resource and stores it in instance variables" do
       subject.call
       expect(subject.timestamp).to_not be(nil)
-      expect(subject.options).to eq({ "status"=>"bad" })
+      expect(subject.options).to eq("status" => "bad")
     end
   end
 
@@ -21,7 +21,7 @@ RSpec.describe StatusPageVi::CloudFlareStatus do
     end
 
     let(:expected_data_to_be_stored) {
-      { "2018-11-23 19:24:38.465389000 +0100" => { "status"=>"bad" } }
+      { "2018-11-23 19:24:38.465389000 +0100" => { "status" => "bad" } }
     }
 
     it "saves new data to the service file" do

@@ -7,7 +7,7 @@ RSpec.describe StatusPageVi::BaseResource do
       allow_any_instance_of(described_class).to receive(:save).and_return(true)
 
       allow_any_instance_of(described_class).to receive(:timestamp).and_return(Time.now)
-      allow_any_instance_of(described_class).to receive(:options).and_return({'status' => 'good'})
+      allow_any_instance_of(described_class).to receive(:options).and_return("status" => "good")
       stub_const(
         "StatusPageVi::BaseResource::URL",
         'https://base-resource.com'

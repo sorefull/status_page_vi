@@ -12,6 +12,6 @@ RSpec.describe StatusPageVi::BaseService do
 
   describe "self#resources" do
     it { expect(described_class.resources("ALL")).to eq(all_services) }
-    it { expect(described_class.resources(StatusPageVi::BitBucket)).to eq([ StatusPageVi::BitBucket ]) }
+    it { expect(described_class.resources(StatusPageVi::BitBucket)).to eq([StatusPageVi::BitBucket]) }
   end
 end
