@@ -1,35 +1,31 @@
 # StatusPageVi
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/status_page_vi`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Nice command-line tool named ‘status_page_vi’ that pulls status information from different services, displays the results and saves it into a data store.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+ - Install Nokogiri dependencies, [instructions](http://www.nokogiri.org/tutorials/installing_nokogiri.html)
 
-```ruby
-gem 'status_page_vi'
-```
+- Install it from your terminal:
 
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install status_page_vi
+  ```
+  $ gem install 'status_page_vi'
+  ```
 
 ## Usage
 
-TODO: Write usage instructions here
+```
+Commands:
+  status_page_vi backup PATH RESOURCE_NAME  # takes a path variable, and creates a backup of historic and currently saved data, ALL resources by default
+  status_page_vi help [COMMAND]             # Describe available commands or one specific command
+  status_page_vi history RESOURCE_NAME      # display all the data which was gathered by the tool, ALL resources by default
+  status_page_vi live RESOURCE_NAME         # constantly queries URL and outputs the status periodically on the console and save it to the data store, ALL resources by default
+  status_page_vi pull RESOURCE_NAME         # make the application pull data from RESOURCE and save into the data store, ALL resources by default
+  status_page_vi resources                  # outputs avaliable resources with urls
+  status_page_vi restore PATH_TO_BACKUP     # takes a path variable which is a backup created by the application and restores that data
+```
 
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/status_page_vi.
+## Testing
+```
+$ rspec
+```
