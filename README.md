@@ -1,6 +1,6 @@
 # StatusPageVi
 
-Nice command-line tool named ‘status_page_vi’ that pulls status information from different services, displays the results and saves it into a data store.
+This is an implemetation of the code challange. Nice command-line tool named ‘status_page_vi’ that pulls status information from different services, displays the results and saves it into a data store.
 
 ## Installation
 
